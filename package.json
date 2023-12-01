@@ -1,0 +1,50 @@
+{
+  "name": "speechless-ai",
+  "version": "1.0.0",
+  "description": "Speechless AI",
+  "devDependencies": {
+    "@types/chai": "^4.3.6",
+    "@types/mocha": "^10.0.2",
+    "@types/node": "^20.7.0",
+    "@types/node-fetch": "^2.6.6",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "chai": "^4.3.9",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean:dist && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
+    "clean:dist": "rm -rf ./dist",
+    "lint": "eslint --ext .js,.jsx,.ts .",
+    "fix": "eslint --fix --ext .js,.jsx,.ts .",
+    "test": "npm run build && npm run test:mocha",
+    "test:mocha": "nyc mocha",
+    "test:mocha-only": "mocha"
+  },
+  "main": "./dist/cjs/speechless.js",
+  "module": "./dist/esm/speechless.js",
+  "types": "./dist/esm/speechless.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/speechless.js",
+      "require": "./dist/cjs/speechless.js",
+      "types": "./dist/esm/speechless.d.ts"
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}
